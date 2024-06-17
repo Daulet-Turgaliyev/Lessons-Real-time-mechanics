@@ -37,17 +37,6 @@ namespace Example.Chests
         {
             _openButton.interactable = interactable;
         }
-
-        
-        public void ShowChestOpenedMessage(string message)
-        {
-            Debug.Log(message);
-        }
-
-        public void ShowRewardMessage(string message)
-        {
-            Debug.Log(message);
-        }
     }
 
 }

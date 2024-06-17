@@ -1,5 +1,6 @@
 using System;
 using Example.Rewards;
+using UnityEngine;
 
 namespace Example.Chests
 {
@@ -8,20 +9,18 @@ namespace Example.Chests
         private readonly ChestView _view;
         private readonly ChestModel _model;
         private readonly ChestTimer _chestTimer;
-        private readonly ChestAnimation _chestAnimation;
         
         public event Action<RewardData> onChestOpened = delegate {  };
 
-        public ChestPresenter(ChestView view, ChestModel model, ChestAnimation chestAnimation)
+        public ChestPresenter(ChestView view, ChestModel model)
         {
             _view = view;
             _model = model;
-            _chestAnimation = chestAnimation;
 
             _chestTimer = new ChestTimer(view, model.TimeToGetChest, model.TimeToOpenChest);
             _chestTimer.onTimerEnded += ActivateOpenButton;
 
-            _view.SetCoinText(model.Reward.Coins.ToString());
+            _view.SetCoinText(model.RewardData.quantity.ToString());
             _view.OnOpenButtonClicked += OpenChest;
         }
 
@@ -32,12 +31,8 @@ namespace Example.Chests
 
         private void OpenChest()
         {
-            _chestAnimation.Open();
-            _view.ShowChestOpenedMessage("Вы открыли сундук с золотом!");
-            _view.ShowRewardMessage($"Вы получили: {_model.Reward.Coins}");
             _view.DestroyOpenButton();
-            
-            onChestOpened?.Invoke(_model.Reward);
+            onChestOpened?.Invoke(_model.RewardData);
         }
 
         public void Destroy()

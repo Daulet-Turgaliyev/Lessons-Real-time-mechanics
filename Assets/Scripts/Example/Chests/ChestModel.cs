@@ -5,16 +5,16 @@ namespace Example.Chests
 {
     public class ChestModel
     {
-        public readonly RewardData Reward;
+        public readonly RewardData RewardData;
         public readonly DateTime TimeToGetChest;
         public readonly int TimeToOpenChest;
         
 
-        public ChestModel(RewardData reward, DateTime timeToGetChest, int timeToOpenChest)
+        public ChestModel(Chest chest, DateTime timeToGetChest)
         {
-            Reward = reward;
+            RewardData = new RewardData(chest.RewardType, chest.Amount);
             TimeToGetChest = timeToGetChest;
-            TimeToOpenChest = timeToOpenChest;
+            TimeToOpenChest = chest.TimeToOpen;
         }
     }
 
